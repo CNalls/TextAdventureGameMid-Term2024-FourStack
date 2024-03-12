@@ -8,6 +8,8 @@
 #include "Room.hpp"
 #include "Entity.hpp"
 
+#include <iostream>
+
 int main(int argc, char* argv[])
 {
     Room room;
@@ -18,5 +20,12 @@ int main(int argc, char* argv[])
         room.Update();
     }
 
+    //Testing for Changing Colors
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);
+    std::cout << "This is red text!" << std::endl;
+
     return 0;
+
+    
 }
