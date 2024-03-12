@@ -30,35 +30,23 @@ void Player::Update() {
         direction = Vector2D(0.0f, 1.0f);
     else if (directionInput == 'd')
         direction = Vector2D(1.0f, 0.0f);
+    
+    // check for key
+    if (room->GetLocation(m_position + direction) == 'K')
+    {
+        m_keyCount++;
+        printf("You Picked Up A Key: %i \n" ,m_keyCount ); 
+        room->ClearLocation(m_position + direction);
+    }
 
-    // Calculate the new position
-    Vector2D newPosition = m_position + direction;
-
-    // Check if the new position is within the bounds of the room
-    if (newPosition.x >= 0 && newPosition.x < room->GetWidth() && newPosition.y >= 0 && newPosition.y < room->GetHeight()) {
-        // check for key
-        if (room->GetLocation(newPosition) == 'K') {
-            m_keyCount++;
-            room->ClearLocation(newPosition);
-        }
-
-        // check for lock
-        if (room->GetLocation(newPosition) == 'L') {
-            if (m_keyCount > 0) {
-                m_keyCount--;
-                room->OpenDoor(newPosition);
-            }
-        }
-
-        // check for door
-        if (room->GetLocation(newPosition) == 'D') {
-            room->OpenDoor(newPosition);
-        }
-
-        // try to move
-        if (room->GetLocation(newPosition) == ' ') {
-            m_position = newPosition;
-        }
+    // check for lock
+    if (room->GetLocation(m_position + direction) == 'L')
+    {
+        if (m_keyCount <= 0)
+            return;
+        //check how do we know we have keys and try to add this to the 
+        m_keyCount --;
+        room->OpenDoor(m_position + direction);
     }
 
     // Engage in combat if an enemy is at the new position
@@ -86,4 +74,39 @@ void Player::Update() {
             }
         }
     }
+}
+
+    //check for gold
+    if (room->GetLocation(m_position + direction) == 'G')
+    {
+        m_goldCount++;
+        printf("You Picked Up Gold: %i \n" ,m_goldCount );
+        //printf("%i \n" ,m_goldCount);
+        room->ClearLocation(m_position + direction);
+    }
+
+    //check for item purchase
+    //For example, sword, bow, buckler, shield, potion, Machine for gambling machine
+    //a weapon that costs 999 gold but one shots everything with a 100% crit chance and accuracy rate
+    if (room->GetLocation(m_position + direction) == 'G')
+    {
+        if (m_goldCount <= 0)
+            return;
+        m_goldCount--;
+        room->ClearLocation(m_position + direction);
+    }
+
+    //check for chest
+    if (room->GetLocation(m_position + direction) == 'C')
+    {
+        if (m_keyCount <= 0)
+            return;
+        //check how do we know we have keys and try to add this to the 
+        m_chestCount --;
+        room->OpenDoor(m_position + direction);
+    }
+
+    // try to move
+    if (room->GetLocation(m_position + direction) == ' ')
+        m_position += direction;
 }
