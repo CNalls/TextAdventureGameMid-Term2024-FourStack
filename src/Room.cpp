@@ -1,6 +1,8 @@
 #include "Room.hpp"
 
 #include "Player.hpp"
+#include "M_Enemy.hpp"
+#include "R_Enemy.hpp"
 
 #include <fstream>
 #include <string>
@@ -154,3 +156,4 @@ void Room::OpenDoor(Vector2D _pos)
         }
     }
 }
+ 

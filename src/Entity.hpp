@@ -1,7 +1,7 @@
 #pragma once
-
 #include <string>
 #include "fogpi/Math.hpp"
+#include "Stats.hpp"
 
 class Room;
 
@@ -19,4 +19,4 @@ public:
 protected:
     Vector2D m_position;
     char m_character;
-};
+}; 
