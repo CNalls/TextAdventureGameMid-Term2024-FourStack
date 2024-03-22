@@ -106,13 +106,34 @@ void Room::Update()
     }
 }
 
+//Color Test:  Here we can change the colors of different inputs | This Method Is Very Limited
 void Room::Draw()
 {
     for (int y = 0; y < m_map.size(); y++)
     {
         for (int x = 0; x < m_map[y].size(); x++)
         {
-            printf("%c ", GetLocation(Vector2D(x, y)));
+            char C = GetLocation(Vector2D(x,y));
+
+//for these we have to find the list of colors agian for c++, and can use https://www.codegrepper.com/code-examples/cpp/c%2B%2B+cout+with+color to find them or https://www.geeksforgeeks.org/how-to-print-colored-text-in-c/
+            if (C == 'P')
+                printf("\033[1;32m");
+
+            if (C == '#')
+                printf("\033[30m");
+
+            if (C == 'L')
+                printf("\033[1;32m");
+
+            if (C == 'K')
+                printf("\033[1;32m");
+
+            if (C == 'D')
+                printf("\033[1;32m");
+
+            printf("%C ", C);
+
+            //printf("%c ", GetLocation(Vector2D(x, y)));
         }
         printf("\n");
     }

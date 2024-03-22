@@ -48,7 +48,9 @@ void Player::Update()
             return;
         //check how do we know we have keys and try to add this to the 
         m_keyCount --;
+        printf("You Have Used a Key to Open this Door: %i \n" ,m_keyCount);
         room->OpenDoor(m_position + direction);
+        //future lock that says (the key doesnt fit)  and is like a boss room key
     }
 
     // check for door
@@ -62,7 +64,6 @@ void Player::Update()
     {
         m_goldCount++;
         printf("You Picked Up Gold: %i \n" ,m_goldCount );
-        //printf("%i \n" ,m_goldCount);
         room->ClearLocation(m_position + direction);
     }
 
@@ -74,6 +75,7 @@ void Player::Update()
         if (m_goldCount <= 0)
             return;
         m_goldCount--;
+        //we gonna have to builda  shop level for this one
         room->ClearLocation(m_position + direction);
     }
 
@@ -81,13 +83,34 @@ void Player::Update()
     if (room->GetLocation(m_position + direction) == 'C')
     {
         if (m_keyCount <= 0)
+        {
+            printf("You Lack The Required Item for this: %i \n" ,m_keyCount );
             return;
+        }
+            
+    
         //check how do we know we have keys and try to add this to the 
-        m_chestCount --;
-        room->OpenDoor(m_position + direction);
+        m_keyCount --;
+        printf("You Have Used a Key to Open the Chest: %i \n" ,m_keyCount );
+        printf("You Have Received a: %i \n" ,m_randomItemCount );
+        printf("Key Count: %i \n" ,m_keyCount );
+
+        room->ClearLocation(m_position + direction);
+    }
+
+    //Check for gold after death
+    // need to change this to however death screen looks
+    if (room->GetLocation(m_position + direction) == ' ')
+    {
+        m_goldCount++;
+        printf("You Picked Up Gold: %i \n" ,m_goldCount );
+        room->ClearLocation(m_position + direction);
     }
 
     // try to move
     if (room->GetLocation(m_position + direction) == ' ')
         m_position += direction;
+
+
+    //Make merchant area, backup code, make a demo enemy area and see if I can get stats to print out on enemy, see if i can make a while loop that makes a combat for an enemy that occurs after walking over the enemy (if possible add ai where it moves a random spot every time you input WASD) )
 }
