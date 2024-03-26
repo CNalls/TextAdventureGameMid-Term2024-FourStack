@@ -12,14 +12,14 @@ void Player::Start()
 void Player::Update()
 {
     // direction
-    std::string instruction = "wasd and Enter to move";
+    std::string instruction = "wasd and Enter to move, press h for help";
     char directionInput = 'r';
     Vector2D direction(0.0f, 0.0f);
 
     while(directionInput != 'w' &&
           directionInput != 'a' &&
           directionInput != 's' &&
-          directionInput != 'd')
+          directionInput != 'd' && directionInput != 'h')
     {
         directionInput = request_char(instruction.c_str());
     }
@@ -32,6 +32,15 @@ void Player::Update()
         direction = Vector2D(0.0f, 1.0f);
     if (directionInput == 'd')
         direction = Vector2D(1.0f, 0.0f);
+    // HELP MENU
+    if (directionInput == 'h')
+        std::cout << "P   the player" << std::endl;
+        std::cout << "D   these are doors, they are all locked" << std::endl;
+        std::cout << "K   these are keys, you need these to open doors" << std::endl;
+        std::cout << "G   this is gold" << std::endl;
+        std::cout << "-   these are ranged enemies" << std::endl;
+        std::cout << "+   these are melee enemies" << std::endl;
+        std::cout << std::endl;
     
     // check for key
     if (room->GetLocation(m_position + direction) == 'K')

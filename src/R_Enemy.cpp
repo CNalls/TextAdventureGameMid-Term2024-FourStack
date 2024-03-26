@@ -1,4 +1,4 @@
-#include "M_Enemy.hpp"
+#include "R_Enemy.hpp"
 #include "fogpi/fogpi.hpp"
 #include "fogpi/Math.hpp"
 #include "Room.hpp"
@@ -6,7 +6,7 @@
 //#include "Stats.hpp"
 void R_Enemy::Start()
 {
-    r_character = '-';
+    m_character = '-';
 
     Stats rEnemyStats
     {
@@ -17,7 +17,7 @@ void R_Enemy::Start()
     
 }
 
-void M_Enemy::Update()
+void R_Enemy::Update()
 {
      
 }
