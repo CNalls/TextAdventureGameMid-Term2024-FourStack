@@ -8,13 +8,18 @@
 
 #include "Entity.hpp"
 #include "Door.hpp"
+#include "Enemy.hpp"
+#include "Player.hpp"
 
+class Player;
 class Room {
 public:
     void Load(std::string _path);
     void Draw();
     void Update();
     Room();
+    void SetPlayer(Player* player); 
+    void AddEnemy(Enemy* enemy);
     void HandleCombat(Entity* player, Entity* enemy);
 
     bool StillPlaying() { return true; }
@@ -47,7 +52,7 @@ public:
     void OpenDoor(Vector2D _pos);
 private:
     Entity *m_player = nullptr;
-    std::vector<Entity*> m_enemies;
+    std::vector<Entity*> m_enemies = {};
     std::vector<Entity*> m_monsters;
     std::vector<std::vector<char>> m_map;
     std::vector<Door> m_doors;

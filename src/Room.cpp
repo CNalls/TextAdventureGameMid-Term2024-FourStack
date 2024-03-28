@@ -75,8 +75,10 @@ void Room::Load(std::string _path) {
 
             // Spawn player if 'S' character is found in the map
             if (m_map[y][x] == 'S') {
+                printf("place player\n");
                 if (m_player == nullptr)
                     m_player = new Player();
+                m_player->room = this;
                 m_player->Init(x, y);
                 m_player->Start();
                 m_map[y][x] = ' '; // Clear player spawn position in the map
@@ -93,6 +95,7 @@ void Room::Update() {
 
     // Update player position
     if (m_player != nullptr) {
+        printf("room pointer: %p", this);
         m_player->room = this;
         m_player->Update();
     }
@@ -129,7 +132,9 @@ void Room::Draw()
 
 
 Entity* Room::GetEnemyAtPosition(Vector2D position) {
+    printf("%i \n", m_enemies.size());
     for (Entity* enemy : m_enemies) {
+        printf("%p \n", enemy);
         if (enemy->GetPosition() == position) {
             return enemy;
         }
@@ -213,3 +218,17 @@ void Room::HandleCombat(Entity* player, Entity* enemy)
         }
     }
 }
+
+
+void Room::AddEnemy(Enemy* enemy) {
+    if (enemy != nullptr) {
+        m_enemies.push_back(enemy);
+    }
+}
+
+
+void Room::SetPlayer(Player* player) {
+    m_player = player;
+}
+
+
