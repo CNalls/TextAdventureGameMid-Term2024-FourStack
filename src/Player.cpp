@@ -61,32 +61,44 @@ void Player::Update()
     Vector2D newPosition = m_position + direction;
 
 // Check for an enemy encounter
-// Inside the Player::Update method, where you check for an enemy encounter
-    if (room->GetLocation(newPosition) == 'E') {
-        std::cout << "You encountered an enemy! Press 'r' to roll the dice." << std::endl;
-
-        char input = 0;
-        while (input != 'r') {
-            std::cout << "Press 'r' to roll: ";
-            std::cin >> input; // Capture input from the player
-            // Optional: clear the input buffer to handle extra characters
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-
-        int playerRoll = rollDice();
-        int enemyRoll = rollDice();
+    if (room->GetLocation(newPosition) == 'E') { // Assuming 'E' is a placeholder for actual enemy symbols
+        char enemyType = room->GetLocationType(newPosition); // Make sure you've implemented this method in the Room class
+        int enemyHealth = (enemyType == 'M' ? 5 : 10); // Mimic or ranged enemy health
     
-        std::cout << "Rolling dice..." << std::endl;
-        std::cout << "Player roll: " << playerRoll << ", Enemy roll: " << enemyRoll << std::endl;
-
-        if (playerRoll > enemyRoll) {
-            std::cout << "You defeated the enemy!" << std::endl;
-            room->ClearLocation(newPosition); // Remove the enemy from the map
-        } else {
-            std::cout << "You were defeated by the enemy! Game Over." << std::endl;
-            // Here you could reduce the player's health or end the game
+        std::cout << "You encountered a " << (enemyType == 'M' ? "Mimic!" : "Archer!") << "! Press 'r' to roll the dice." << std::endl;
+    
+        while (m_health > 0 && enemyHealth > 0) {
+            std::cout << "Press 'r' to roll: ";
+            char input;
+            std::cin >> input; // Assuming input validation is done elsewhere
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        
+            if (input == 'r') {
+                int playerRoll = rollDice();
+                int enemyRoll = rollDice();
+                std::cout << "You rolled: " << playerRoll << ", Enemy rolled: " << enemyRoll << std::endl;
+            
+                // Damage calculation based on the rolls
+                m_health -= enemyRoll; // Player takes damage equal to the enemy's roll
+                enemyHealth -= playerRoll; // Enemy takes damage equal to the player's roll
+            
+                std::cout << "You took " << enemyRoll << " damage! Your health: " << m_health << std::endl;
+                std::cout << "Enemy took " << playerRoll << " damage! Enemy health: " << enemyHealth << std::endl;
+            }
+        
+            if (m_health <= 0) {
+                std::cout << "You were defeated by the enemy! Game Over." << std::endl;
+                // Handle player defeat (e.g., end game)
+                exit(0);
+                break;
+            } else if (enemyHealth <= 0) {
+                std::cout << "You defeated the enemy!" << std::endl;
+                room->ClearLocation(newPosition); // Remove the enemy from the map
+                break;
+            }
         }
-        return; // Skip moving into the enemy's space
+    
+        return; // Skip moving into the enemy's space if combat initiated
     }
 
 

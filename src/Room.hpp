@@ -21,6 +21,7 @@ public:
     char GetLocation(Vector2D _pos);
     void ClearLocation(Vector2D _pos);
     void OpenDoor(Vector2D _pos);
+    char GetLocationType(Vector2D _pos);
 private:
     Entity *m_player = nullptr;
     std::vector<Entity*> m_monsters;
