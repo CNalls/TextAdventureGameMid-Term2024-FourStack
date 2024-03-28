@@ -4,6 +4,8 @@
 #include "fogpi/Math.hpp"
 #include "Room.hpp"
 #include <string>
+#include <random>
+#include <ctime>
 
 // Define the possible drops
 enum Drop {
@@ -75,8 +77,8 @@ int ChestRand() {
             std::cout << "Wait a Minute, This isn't Supposed to be here... Flintlock Aquired...";
             break;
         case Drop::LeatherArmor:
-            std::cout << "Literally Rags, Basically a Potato Sack. Try Not to Get Hit. Leather Armor Aquired...";
             break;
+            std::cout << "Literally Rags, Basically a Potato Sack. Try Not to Get Hit. Leather Armor Aquired...";
         case Drop::Chainmail:
             std::cout << "Ah Yes, True Chainlinked Armor, Watch Out For Blunt Trauma! Chainmail Aquired...";
             break;
@@ -92,27 +94,40 @@ int ChestRand() {
     }
     std::cout << std::endl;
 
-    
-
     return 0;
+}
+
+int rollDice() 
+{
+    static std::mt19937 rng(static_cast<unsigned int>(time(0))); // Seed with time
+    std::uniform_int_distribution<int> distribution(1, 6); // 1 to 6
+    return distribution(rng);
 }
 
 void Player::Start()
 {
     m_character = 'P';
+
+    Stats playerStats
+    {
+        .strength = 5.0f,
+        .dexterity = 6.0f,
+        .constitution = 8.0f
+    };
 }
 
 void Player::Update()
 {
     // direction
-    std::string instruction = "wasd and Enter to move";
+    std::string instruction = "wasd and Enter to move, press h for help";
     char directionInput = 'r';
     Vector2D direction(0.0f, 0.0f);
 
     while(directionInput != 'w' &&
           directionInput != 'a' &&
           directionInput != 's' &&
-          directionInput != 'd')
+          directionInput != 'd' && 
+          directionInput != 'h')
     {
         directionInput = request_char(instruction.c_str());
     }
@@ -125,7 +140,62 @@ void Player::Update()
         direction = Vector2D(0.0f, 1.0f);
     if (directionInput == 'd')
         direction = Vector2D(1.0f, 0.0f);
+    // HELP MENU
+    if (directionInput == 'h')
+    {
+        std::cout << "P   the player" << std::endl;
+        std::cout << "L   these are doors, they are all locked" << std::endl;
+        std::cout << "K   these are keys, you need these to open doors" << std::endl;
+        std::cout << "G   this is gold" << std::endl;
+        std::cout << "-   these are ranged enemies" << std::endl;
+        std::cout << "+   these are melee enemies" << std::endl;
+        std::cout << std::endl;
+    }
+    Vector2D newPosition = m_position + direction;
+
+// Check for an enemy encounter
+    if (room->GetLocation(newPosition) == 'E') { // Assuming 'E' is a placeholder for actual enemy symbols
+        char enemyType = room->GetLocationType(newPosition); // Make sure you've implemented this method in the Room class
+        int enemyHealth = (enemyType == 'M' ? 5 : 10); // Mimic or ranged enemy health
     
+        std::cout << "You encountered a " << (enemyType == 'M' ? "Mimic!" : "Archer!") << "! Press 'r' to roll the dice." << std::endl;
+    
+        while (m_health > 0 && enemyHealth > 0) {
+            std::cout << "Press 'r' to roll: ";
+            char input;
+            std::cin >> input; // Assuming input validation is done elsewhere
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        
+            if (input == 'r') {
+                int playerRoll = rollDice();
+                int enemyRoll = rollDice();
+                std::cout << "You rolled: " << playerRoll << ", Enemy rolled: " << enemyRoll << std::endl;
+            
+                // Damage calculation based on the rolls
+                m_health -= enemyRoll; // Player takes damage equal to the enemy's roll
+                enemyHealth -= playerRoll; // Enemy takes damage equal to the player's roll
+            
+                std::cout << "You took " << enemyRoll << " damage! Your health: " << m_health << std::endl;
+                std::cout << "Enemy took " << playerRoll << " damage! Enemy health: " << enemyHealth << std::endl;
+            }
+        
+            if (m_health <= 0) {
+                std::cout << "You were defeated by the enemy! Game Over." << std::endl;
+                // Handle player defeat (e.g., end game)
+                exit(0);
+                break;
+            } 
+            else if (enemyHealth <= 0) {
+                std::cout << "You defeated the enemy!" << std::endl;
+                room->ClearLocation(newPosition); // Remove the enemy from the map
+                break;
+            }
+        }
+    
+        return; // Skip moving into the enemy's space if combat initiated
+    }
+
+
     // check for key
     if (room->GetLocation(m_position + direction) == 'K')
     {
@@ -220,3 +290,5 @@ void Player::Update()
     //make a gamble random machine 
     //Make merchant area, backup code, make a demo enemy area and see if I can get stats to print out on enemy, see if i can make a while loop that makes a combat for an enemy that occurs after walking over the enemy (if possible add ai where it moves a random spot every time you input WASD) )
 }
+
+

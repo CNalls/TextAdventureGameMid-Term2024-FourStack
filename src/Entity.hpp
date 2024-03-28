@@ -1,5 +1,4 @@
 #pragma once
-
 #include <string>
 #include "fogpi/Math.hpp"
 #include "Stats.hpp"
@@ -21,5 +20,4 @@ public:
 protected:
     Vector2D m_position;
     char m_character;
-    
-};
+}; 
