@@ -135,6 +135,14 @@ char Room::GetLocation(Vector2D _pos)
     return m_map[_pos.y][_pos.x];
 }
 
+char Room::GetLocationType(Vector2D _pos) 
+{
+    if (_pos.y >= m_map.size() || _pos.x >= m_map[_pos.y].size()) {
+        return ' '; 
+    }
+    return m_map[_pos.y][_pos.x]; 
+}
+
 void Room::ClearLocation(Vector2D _pos)
 {
     if (_pos.y >= m_map.size())
