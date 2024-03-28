@@ -3,6 +3,15 @@
 #include "fogpi/Math.hpp"
 #include "Room.hpp"
 #include <string>
+#include <random>
+#include <ctime>
+
+int rollDice() 
+{
+    static std::mt19937 rng(static_cast<unsigned int>(time(0))); // Seed with time
+    std::uniform_int_distribution<int> distribution(1, 6); // 1 to 6
+    return distribution(rng);
+}
 
 void Player::Start()
 {
@@ -49,6 +58,38 @@ void Player::Update()
         std::cout << "+   these are melee enemies" << std::endl;
         std::cout << std::endl;
     
+    Vector2D newPosition = m_position + direction;
+
+// Check for an enemy encounter
+// Inside the Player::Update method, where you check for an enemy encounter
+    if (room->GetLocation(newPosition) == 'E') {
+        std::cout << "You encountered an enemy! Press 'r' to roll the dice." << std::endl;
+
+        char input = 0;
+        while (input != 'r') {
+            std::cout << "Press 'r' to roll: ";
+            std::cin >> input; // Capture input from the player
+            // Optional: clear the input buffer to handle extra characters
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+
+        int playerRoll = rollDice();
+        int enemyRoll = rollDice();
+    
+        std::cout << "Rolling dice..." << std::endl;
+        std::cout << "Player roll: " << playerRoll << ", Enemy roll: " << enemyRoll << std::endl;
+
+        if (playerRoll > enemyRoll) {
+            std::cout << "You defeated the enemy!" << std::endl;
+            room->ClearLocation(newPosition); // Remove the enemy from the map
+        } else {
+            std::cout << "You were defeated by the enemy! Game Over." << std::endl;
+            // Here you could reduce the player's health or end the game
+        }
+        return; // Skip moving into the enemy's space
+    }
+
+
     // check for key
     if (room->GetLocation(m_position + direction) == 'K')
     {
@@ -107,3 +148,5 @@ void Player::Update()
     if (room->GetLocation(m_position + direction) == ' ')
         m_position += direction;
 }
+
+
