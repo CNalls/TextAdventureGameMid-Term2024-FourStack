@@ -123,16 +123,22 @@ void Room::Draw()
                 printf("\033[30m");
 
             if (C == 'L')
-                printf("\033[1;32m");
+                printf("\033[1m\033[35m");
 
             if (C == 'K')
-                printf("\033[1;32m");
+                printf("\033[1m\033[33m");
 
             if (C == 'D')
-                printf("\033[1;32m");
+                printf("\033[1m\033[37m");
+
+            if (C == 'G')
+                printf("\033[33m");
+
+            if (C == 'C')
+                printf("\033[1m\033[36m");
 
             printf("%C ", C);
-
+            // melee can be red and range can be blue
             //printf("%c ", GetLocation(Vector2D(x, y)));
         }
         printf("\n");

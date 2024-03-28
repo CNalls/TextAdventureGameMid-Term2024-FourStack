@@ -1,9 +1,10 @@
 #pragma once
-#include <string>
 #include "fogpi/Math.hpp"
+#include <iostream>
+#include <random>
+#include <vector>
+#include "fogpi/fogpi.hpp"
+#include "Room.hpp"
+#include <string>
+#include <stdlib.h>
 
-struct Chest
-{
-    Vector2D pos;
-    std::string path;
-};
