@@ -7,6 +7,13 @@
 void Player::Start()
 {
     m_character = 'P';
+
+    Stats playerStats
+    {
+        .strength = 5.0f,
+        .dexterity = 6.0f,
+        .constitution = 8.0f
+    };
 }
 
 void Player::Update()
