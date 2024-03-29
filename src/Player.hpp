@@ -8,7 +8,7 @@ public:
     void Start();
     void Update();
 private:
-    int m_health = 20;
+    int m_health = 40; //change player health here 
     int m_keyCount = 0;
     int m_goldCount = 0;
     int m_chestCount = 0;
