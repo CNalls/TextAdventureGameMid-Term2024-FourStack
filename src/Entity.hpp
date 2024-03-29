@@ -8,6 +8,7 @@ class Room;
 class Entity {
 public:
     Room* room;
+    Stats stats;
 
     void Init(unsigned int _x, unsigned int _y) { m_position = Vector2D(_x, _y); }
 
