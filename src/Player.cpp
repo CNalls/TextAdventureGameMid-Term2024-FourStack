@@ -291,4 +291,8 @@ void Player::Update()
     //Make merchant area, backup code, make a demo enemy area and see if I can get stats to print out on enemy, see if i can make a while loop that makes a combat for an enemy that occurs after walking over the enemy (if possible add ai where it moves a random spot every time you input WASD) )
 }
 
+void Player::RestoreHealth() {
+    m_health = m_maxHealth;
+}
+
 

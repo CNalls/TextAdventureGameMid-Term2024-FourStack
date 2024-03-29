@@ -190,5 +190,14 @@ void Room::OpenDoor(Vector2D _pos)
             Load(m_doors[i].path);
         }
     }
+    if (m_player != nullptr) 
+    {
+        Player* player = dynamic_cast<Player*>(m_player); // Attempt to cast m_player to Player*
+        if (player) 
+        { // Check if the cast was successful
+            player->RestoreHealth();
+            std::cout << "Max health reached." << std::endl;
+        }
+    }
 }
  
