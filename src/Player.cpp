@@ -59,7 +59,7 @@ void Player::Update()
         std::cout << "-   these are ranged enemies" << std::endl;
         std::cout << "+   these are melee enemies" << std::endl;
         std::cout << std::endl;
-    
+    }
     Vector2D newPosition = m_position + direction;
 
 // Check for an enemy encounter
@@ -93,7 +93,8 @@ void Player::Update()
                 // Handle player defeat (e.g., end game)
                 exit(0);
                 break;
-            } else if (enemyHealth <= 0) {
+            } 
+            else if (enemyHealth <= 0) {
                 std::cout << "You defeated the enemy!" << std::endl;
                 room->ClearLocation(newPosition); // Remove the enemy from the map
                 break;
