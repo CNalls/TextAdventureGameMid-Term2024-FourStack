@@ -7,8 +7,10 @@ class Player : public Entity
 public:
     void Start();
     void Update();
+    void RestoreHealth();
 private:
-    int m_health = 20;
+    int m_health = 40; //change player health here 
+    const int m_maxHealth = 40;
     int m_keyCount = 0;
     int m_goldCount = 0;
     int m_chestCount = 0;

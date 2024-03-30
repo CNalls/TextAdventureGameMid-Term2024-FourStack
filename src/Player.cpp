@@ -186,6 +186,7 @@ void Player::Update()
                 break;
             } 
             else if (enemyHealth <= 0) {
+                room->DecreaseEnemyCount(); 
                 std::cout << "You defeated the enemy!" << std::endl;
                 m_goldCount++;
                 printf("You Loot The Enemies Pockets and have Received Some Gold: %i \n" ,m_goldCount );
@@ -291,6 +292,10 @@ void Player::Update()
 
     //make a gamble random machine 
     //Make merchant area, backup code, make a demo enemy area and see if I can get stats to print out on enemy, see if i can make a while loop that makes a combat for an enemy that occurs after walking over the enemy (if possible add ai where it moves a random spot every time you input WASD) )
+}
+
+void Player::RestoreHealth() {
+    m_health = m_maxHealth;
 }
 
 
