@@ -16,6 +16,7 @@ private:
     int m_chestCount = 0;
     int m_randomItemCount = 0;
     int m_dropItem = 0;
+    int m_enemykillCount = 0;
 
     
     

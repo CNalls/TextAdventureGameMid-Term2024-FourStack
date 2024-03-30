@@ -187,10 +187,10 @@ void Player::Update()
             } 
             else if (enemyHealth <= 0) {
                 room->DecreaseEnemyCount(); 
-                std::cout << "You defeated the enemy!" << std::endl;
-                m_goldCount++;
-                printf("You Loot The Enemies Pockets and have Received Some Gold: %i \n" ,m_goldCount );
-                room->ClearLocation(newPosition); // Remove the enemy from the map
+                m_enemykillCount ++;
+                printf("You defeated the enemy!: %i \n", m_enemykillCount);
+                room->ClearLocation(m_position + direction);
+                // Remove the enemy from the map
                 break;
             }
         }
@@ -222,6 +222,12 @@ void Player::Update()
     // check for door
     if (room->GetLocation(m_position + direction) == 'D')
     {
+        if (m_enemykillCount >= 2)
+            return;
+            printf("Debug");
+        
+        m_enemykillCount --;
+        
         room->OpenDoor(m_position + direction);
     }
 
@@ -257,7 +263,7 @@ void Player::Update()
 
     if (room->GetLocation(m_position + direction) == 'L')
     {
-        if (m_keyCount <= 0)
+        if (m_keyCount <= 0 && m_enemykillCount >= 2)
         {
             printf("You Lack The Required Item for this, AKA YOU SHALL NOT PASS!: %i \n" ,m_keyCount );
             return;
