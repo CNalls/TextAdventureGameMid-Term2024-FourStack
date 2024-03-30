@@ -186,8 +186,10 @@ void Player::Update()
                 break;
             } 
             else if (enemyHealth <= 0) {
+                room->DecreaseEnemyCount(); 
                 std::cout << "You defeated the enemy!" << std::endl;
-                room->ClearLocation(newPosition); // Remove the enemy from the map
+                room->ClearLocation(newPosition);
+                // Remove the enemy from the map
                 break;
             }
         }

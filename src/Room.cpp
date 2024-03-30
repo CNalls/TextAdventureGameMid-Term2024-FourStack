@@ -183,6 +183,13 @@ void Room::ClearLocation(Vector2D _pos)
 
 void Room::OpenDoor(Vector2D _pos)
 {
+    std::cout << "Attempting to open a door. Enemies remaining: " << m_enemyCount << std::endl;
+    if (m_enemyCount > 0) 
+    {
+        std::cout << "All enemies must be defeated before opening the door." << std::endl;
+        return; // Exit the function if there are still enemies present
+    }
+
     for(int i = 0; i < m_doors.size(); i++)
     {
         if (m_doors[i].pos == _pos)
