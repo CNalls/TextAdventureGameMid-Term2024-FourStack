@@ -187,6 +187,8 @@ void Player::Update()
             } 
             else if (enemyHealth <= 0) {
                 std::cout << "You defeated the enemy!" << std::endl;
+                m_goldCount++;
+                printf("You Loot The Enemies Pockets and have Received Some Gold: %i \n" ,m_goldCount );
                 room->ClearLocation(newPosition); // Remove the enemy from the map
                 break;
             }

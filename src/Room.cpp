@@ -120,7 +120,7 @@ void Room::Draw()
 //for these we have to find the list of colors agian for c++, and can use https://www.codegrepper.com/code-examples/cpp/c%2B%2B+cout+with+color to find them or https://www.geeksforgeeks.org/how-to-print-colored-text-in-c/
             if (C == 'P')
                 printf("\033[1;32m");
-
+            
             if (C == '#')
                 printf("\033[30m");
 
@@ -139,7 +139,12 @@ void Room::Draw()
             if (C == 'C')
                 printf("\033[1m\033[36m");
 
+            if (C == 'E')
+                printf("\033[1m\033[31m");
+
+
             printf("%C ", C);
+
             // melee can be red and range can be blue
             //printf("%c ", GetLocation(Vector2D(x, y)));
         }
