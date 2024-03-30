@@ -193,6 +193,11 @@ void Player::Update()
                 m_enemykillCount ++;
                 printf("You defeated the enemy!: %i \n", m_enemykillCount);
                 m_keyCount++;
+                m_goldCount++;
+                printf("Key Count: %i \n" ,m_keyCount );
+                printf("Gold Count: %i \n" ,m_goldCount );
+                printf("Current Health: %i \n" ,m_health );
+                printf("Out Of: %i \n" ,m_maxHealth );
                 room->ClearLocation(m_position + direction);
                 // Remove the enemy from the map
                 break;
