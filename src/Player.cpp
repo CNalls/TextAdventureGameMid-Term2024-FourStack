@@ -151,7 +151,7 @@ void Player::Update()
         std::cout << "C   this is a chest" << std::endl;
         //std::cout << "-   these are ranged enemies" << std::endl;
         //std::cout << "+   these are melee enemies" << std::endl;
-        std::cout << "e   these are enemies" << std::endl;
+        std::cout << "E   these are enemies" << std::endl;
         std::cout << std::endl;
     }
     Vector2D newPosition = m_position + direction;
