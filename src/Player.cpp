@@ -145,10 +145,13 @@ void Player::Update()
     {
         std::cout << "P   the player" << std::endl;
         std::cout << "L   these are doors, they are all locked" << std::endl;
+        //std::cout << "D   these are unlocked doors, they are all locked" << std::endl;
         std::cout << "K   these are keys, you need these to open doors" << std::endl;
         std::cout << "G   this is gold" << std::endl;
-        std::cout << "-   these are ranged enemies" << std::endl;
-        std::cout << "+   these are melee enemies" << std::endl;
+        std::cout << "C   this is a chest" << std::endl;
+        //std::cout << "-   these are ranged enemies" << std::endl;
+        //std::cout << "+   these are melee enemies" << std::endl;
+        std::cout << "e   these are enemies" << std::endl;
         std::cout << std::endl;
     }
     Vector2D newPosition = m_position + direction;
@@ -189,6 +192,7 @@ void Player::Update()
                 room->DecreaseEnemyCount(); 
                 m_enemykillCount ++;
                 printf("You defeated the enemy!: %i \n", m_enemykillCount);
+                m_keyCount++;
                 room->ClearLocation(m_position + direction);
                 // Remove the enemy from the map
                 break;
@@ -198,7 +202,7 @@ void Player::Update()
         return; // Skip moving into the enemy's space if combat initiated
     }
 
-
+/*
     // check for key
     if (room->GetLocation(m_position + direction) == 'K')
     {
@@ -206,7 +210,7 @@ void Player::Update()
         printf("You Picked Up A Key: %i \n" ,m_keyCount ); 
         room->ClearLocation(m_position + direction);
     }
-
+*/
     // check for lock
     if (room->GetLocation(m_position + direction) == 'L')
     {
